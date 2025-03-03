@@ -10,6 +10,7 @@ import {
   FileChartColumn,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
   Package,
   PieChart,
@@ -58,6 +59,14 @@ const data = {
 
 
   navMain: [
+
+    
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
+    },
+
     {
       title: "Attendance",
       url: "#",
@@ -71,33 +80,6 @@ const data = {
           title: "Explorer",
           url: "#",
         },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Courses",
-      url: "#",
-      icon: Package,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
       ],
     },
     {
@@ -106,20 +88,12 @@ const data = {
       icon: Settings2,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Users",
+          url: "/settings/users",
         },
         {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
+          title: "Classroom",
+          url: "/settings/classrooms",
         },
       ],
     },
