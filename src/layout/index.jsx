@@ -8,6 +8,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Header } from "@/components/header/app-header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export default function Layout({ children }) {
 
@@ -18,19 +19,22 @@ export default function Layout({ children }) {
 
   return (
     <div>
-      {isAuthPage ? (
-        <div>{children}</div>
-      ) : (
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
 
-            <Header />
-            <div className="p-4 pt-0">{children}</div>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        {isAuthPage ? (
+          <div>{children}</div>
+        ) : (
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
 
-          </SidebarInset>
-        </SidebarProvider>
-      )}
+              <Header />
+              <div className="p-4 pt-0">{children}</div>
+
+            </SidebarInset>
+          </SidebarProvider>
+        )}
+      </ThemeProvider>
     </div>
   );
 }

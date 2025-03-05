@@ -10,6 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 
+import { ModeToggle } from "@/components/theme/theme-toggle";
 import { useLocation } from "react-router-dom";
 import { SidebarTrigger, } from "@/components/ui/sidebar";
 
@@ -46,6 +47,7 @@ export function Header() {
                         </Breadcrumb>
                     </div>
                     <div>
+                        <ModeToggle />
                     </div>
                 </div>
             </header>
