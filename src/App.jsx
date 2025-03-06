@@ -1,5 +1,6 @@
 
 import AppRouter from "./router"
+import { ThemeProvider } from "@/components/theme/theme-provider"
 
 function App() {
   return (
