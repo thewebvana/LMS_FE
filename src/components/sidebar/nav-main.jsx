@@ -54,6 +54,15 @@ export function NavMain({ items }) {
               {item.items &&
               <CollapsibleContent>
                 <SidebarMenuSub>
+
+
+               <motion.div
+               initial={{ opacity: 0, height: 0 }}
+               animate={{ opacity: 1, height: "auto" }}
+               exit={{ opacity: 0, height: 0 }}
+               transition={{ duration: 0.2, ease: "easeOut" }}
+             >
+
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
@@ -63,6 +72,7 @@ export function NavMain({ items }) {
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
+              </motion.div>
                 </SidebarMenuSub>
               </CollapsibleContent>
               
