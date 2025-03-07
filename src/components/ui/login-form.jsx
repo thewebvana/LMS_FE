@@ -12,8 +12,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import useAxios from "@/axios/interceptors";
+import { useEffect } from "react";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export function LoginForm({ className, ...props }) {
+	
+	const [Axios] = useAxios();
+
+	useEffect(() => {
+		console.log("hello");
+		let fetchData = async () => {
+			try {
+				let response = await Axios.get(`${apiUrl}/posts`);
+				console.log(response);
+			} catch (error) {
+				console.error("error", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
 			<Card>
