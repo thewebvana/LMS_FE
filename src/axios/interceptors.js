@@ -34,7 +34,7 @@ const useAxios = () => {
       if (config.method === "post") {
         let toastId = "";
         if (!config?.params?.hide_toast) {
-          toastId = loadingToast("Please wait, Loading...");
+          // toastId = loadingToast("Please wait, Loading...");
         }
 
         config.headers["toastId"] = toastId;

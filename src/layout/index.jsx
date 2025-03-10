@@ -3,7 +3,6 @@ import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Outlet } from "react-router-dom";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Header } from "@/components/header/app-header";
-import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export default function Layout({ children }) {
 	return (
