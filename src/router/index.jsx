@@ -1,9 +1,9 @@
 import Layout from "@/layout";
 import Dashboard from "@/pages/dashboard";
-import Login from "@/pages/login";
+import Login from "@/components/auth/Login";
+import Signup from "@/components/auth/Signup";
 import Classrooms from "@/pages/settings/classrooms";
 import Users from "@/pages/settings/users";
-import Signup from "@/pages/signup";
 import { useState } from "react";
 import {
 	BrowserRouter as Router,

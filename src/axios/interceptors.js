@@ -32,12 +32,12 @@ const useAxios = () => {
       }
 
       if (config.method === "post") {
-        let toastId = "";
-        if (!config?.params?.hide_toast) {
+        // let toastId = "";
+        // if (!config?.params?.hide_toast) {
           // toastId = loadingToast("Please wait, Loading...");
-        }
+        // }
 
-        config.headers["toastId"] = toastId;
+        // config.headers["toastId"] = toastId;
 
         const DefaultData = {};
 

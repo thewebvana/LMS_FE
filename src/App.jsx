@@ -1,4 +1,5 @@
 
+import Modal from "./components/Modal"
 import AppRouter from "./router"
 import { ThemeProvider } from "@/components/theme/theme-provider"
 
@@ -6,6 +7,7 @@ function App() {
   return (
     <>
       <AppRouter />
+      <Modal/>
     </>
   )
 }
