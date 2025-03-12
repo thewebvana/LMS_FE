@@ -12,6 +12,8 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import Modal from "@/components/utils/Modal"
+import { Toaster, toast } from 'sonner'
 
 const RedirectToLogin = () => {
 	return (
@@ -26,7 +28,7 @@ function AppRouter() {
 
 	return (
 		<Router>
-			<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 				<Routes>
 					{/* Public Routes */}
 					<Route path="/" element={<Login />} />
@@ -44,6 +46,8 @@ function AppRouter() {
 						<Route path="*" element={<Navigate to="/login" replace />} />
 					)}
 				</Routes>
+				<Modal />
+				<Toaster richColors />
 			</ThemeProvider>
 		</Router>
 	);

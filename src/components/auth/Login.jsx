@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import useModalStore from "@/store/useModalStore";
 import AddUser from "./AddUser";
 
-// import { toast } from "sonner"
+import { toast } from "sonner"
 
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -24,12 +24,12 @@ export default function Login() {
 	const { openModal, content } = useModalStore();
 
 	function handleClick() {
-		// toast("Event has been created.")
-		// openModal({
-		//     Component: AddUser, // Pass the component
-		//     title: "User Registration",
-		//     description: "Fill out the form to create a new user account.",
-		// });
+		toast.success("Event has been created.")
+		openModal({
+		    Component: AddUser, // Pass the component
+		    title: "User Registration",
+		    description: "Fill out the form to create a new user account.",
+		});
 	}
 
 
@@ -69,7 +69,7 @@ export default function Login() {
 										Forgot your password?
 									</a>
 									<Link to="/dashboard">
-										<Button className="w-full">Login</Button>
+										<Button className="w-full" >Login</Button>
 									</Link>
 								</div>
 								<div className="mt-4 text-center text-sm">
