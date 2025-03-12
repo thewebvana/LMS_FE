@@ -15,23 +15,27 @@ import { useEffect } from "react";
 import useModalStore from "@/store/useModalStore";
 import AddUser from "./AddUser";
 
+// import { toast } from "sonner"
+
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Login() {
 	const { openModal, content } = useModalStore();
 
 	function handleClick() {
-		openModal({
-            Component: AddUser, // Pass the component
-            title: "User Registration",
-            description: "Fill out the form to create a new user account.",
-        });
+		// toast("Event has been created.")
+		// openModal({
+		//     Component: AddUser, // Pass the component
+		//     title: "User Registration",
+		//     description: "Fill out the form to create a new user account.",
+		// });
 	}
 
 
 	return (
 		<div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-            
+
 			<div className="w-full max-w-sm">
 				<div className="flex flex-col gap-6">
 					<Card>
