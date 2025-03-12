@@ -10,9 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
-import { principalSchema } from "./validations";
-
+import { principalSchema } from "../utils/schemas/Auth";
 import {
 	Form,
 	FormControl,
@@ -21,13 +19,10 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import useAxios from "@/axios/interceptors";
 import { useEffect } from "react";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { registerUser } from "../utils/services/auth";
 
 export default function Signup() {
-	const [Axios] = useAxios();
 
 	const form = useForm({
 		resolver: zodResolver(principalSchema),
@@ -40,14 +35,8 @@ export default function Signup() {
 	});
 
 	const onSubmit = async (data) => {
-		let payload = {
-			email: "28saurbh@gmail.com",
-			password: "12345",
-			role: "admin",
-			name: "admin",
-		};
 		try {
-			let response = await Axios.post(`${apiUrl}/auth/v1/register`, payload);
+			let response = await registerUser(data);
 			console.log(response);
 		} catch (error) {
 			console.error("error", error);

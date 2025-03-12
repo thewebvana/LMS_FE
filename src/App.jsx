@@ -1,5 +1,5 @@
 
-import Modal from "./components/Modal"
+import Modal from "./components/utils/Modal"
 import AppRouter from "./router"
 import { ThemeProvider } from "@/components/theme/theme-provider"
 
