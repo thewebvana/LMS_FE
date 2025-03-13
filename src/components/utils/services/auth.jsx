@@ -1,12 +1,12 @@
 import useAxios from "@/axios/interceptors";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const registerUser = async (data) => {
-  const Axios = useAxios()[0]; // Get Axios instance
 
   try {
-    const response = await Axios.post(`${apiUrl}/auth/v1/register`, data);
+    const response = await axios.post(`${apiUrl}/auth/v1/register`, data);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: "An error occurred" };
@@ -14,10 +14,9 @@ export const registerUser = async (data) => {
 };
 
 export const getAllUsers = async (data) => {
-  const Axios = useAxios()[0]; // Get Axios instance
 
   try {
-    const response = await Axios.get(`${apiUrl}/v1/users`);
+    const response = await axios.get(`${apiUrl}/v1/users`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: "An error occurred" };

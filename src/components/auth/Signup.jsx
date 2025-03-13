@@ -23,20 +23,17 @@ import { useEffect } from "react";
 import { getAllUsers, registerUser } from "../utils/services/auth";
 import { Loader2 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner"
+
 
 export default function Signup() {
-
 	const queryClient = useQueryClient();
+
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["getAllUsers"],
 		queryFn: getAllUsers,
-	  });
+	});
 
-
-	  console.log("data", data)
-	  console.log("isLoading", isLoading)
-	//   console.log("isError", isError)
-	//   console.log("error", error)
 
 	const form = useForm({
 		resolver: zodResolver(principalSchema),
@@ -48,25 +45,26 @@ export default function Signup() {
 		},
 	});
 
-
 	const mutation = useMutation({
 		mutationFn: registerUser,
 		onSuccess: (data) => {
-		  // Option 1: Refetch posts after adding
-		  queryClient.invalidateQueries(["getAllUsers"]);
-	
-		  // Option 2: Update cache manually for better performance
-		  // queryClient.setQueryData(["posts"], (oldPosts) => [...oldPosts, newPost]);
+			queryClient.invalidateQueries(["getAllUsers"]);
 		},
 		onError: (error) => {
-			console.log("mutation error", error.message)
-		}
-	  });
+			console.error("mutation error", error.message);
+		},
+	});
 
-	  
 
 	const onSubmit = async (data) => {
-		mutation.mutate(data);
+		await toast.promise(
+			mutation.mutateAsync(data),
+			{
+			  loading: "Registering...",
+			  success: (data) => `${data?.message}`,
+			  error: (error) => `${error.message}`,
+			}
+		  );
 	};
 
 	return (
@@ -157,7 +155,7 @@ export default function Signup() {
 									/>
 
 									{/* Submit Button */}
-									<Button type="submit" className="w-full" disabled={false}>
+									<Button type="submit" className="w-full" disabled={mutation.isPending}>
 										Register
 									</Button>
 								</form>
