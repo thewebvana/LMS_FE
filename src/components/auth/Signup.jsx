@@ -20,27 +20,53 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { useEffect } from "react";
-import { registerUser } from "../utils/services/auth";
+import { getAllUsers, registerUser } from "../utils/services/auth";
+import { Loader2 } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function Signup() {
+
+	const queryClient = useQueryClient();
+	const { data, isLoading, isError, error } = useQuery({
+		queryKey: ["getAllUsers"],
+		queryFn: getAllUsers,
+	  });
+
+
+	  console.log("data", data)
+	  console.log("isLoading", isLoading)
+	//   console.log("isError", isError)
+	//   console.log("error", error)
 
 	const form = useForm({
 		resolver: zodResolver(principalSchema),
 		defaultValues: {
-			username: "",
+			name: "",
 			email: "",
 			password: "",
 			confirmPassword: "",
 		},
 	});
 
-	const onSubmit = async (data) => {
-		try {
-			let response = await registerUser(data);
-			console.log(response);
-		} catch (error) {
-			console.error("error", error);
+
+	const mutation = useMutation({
+		mutationFn: registerUser,
+		onSuccess: (data) => {
+		  // Option 1: Refetch posts after adding
+		  queryClient.invalidateQueries(["getAllUsers"]);
+	
+		  // Option 2: Update cache manually for better performance
+		  // queryClient.setQueryData(["posts"], (oldPosts) => [...oldPosts, newPost]);
+		},
+		onError: (error) => {
+			console.log("mutation error", error.message)
 		}
+	  });
+
+	  
+
+	const onSubmit = async (data) => {
+		mutation.mutate(data);
 	};
 
 	return (
@@ -58,13 +84,13 @@ export default function Signup() {
 									onSubmit={form.handleSubmit(onSubmit)}
 									className="flex flex-col gap-6"
 								>
-									{/* Username Field */}
+									{/* full_name Field */}
 									<FormField
 										control={form.control}
-										name="username"
+										name="name"
 										render={({ field }) => (
 											<FormItem>
-												<FormLabel>Username</FormLabel>
+												<FormLabel>Full Name</FormLabel>
 												<FormControl>
 													<Input placeholder="Your name" {...field} />
 												</FormControl>
@@ -131,7 +157,7 @@ export default function Signup() {
 									/>
 
 									{/* Submit Button */}
-									<Button type="submit" className="w-full">
+									<Button type="submit" className="w-full" disabled={false}>
 										Register
 									</Button>
 								</form>
@@ -140,7 +166,7 @@ export default function Signup() {
 							<div className="mt-4 text-center text-sm">
 								Already have an account?{" "}
 								<Link to="/">
-									<Button variant="link" size="none">
+									<Button variant="link" size="none" asChild>
 										Login
 									</Button>
 								</Link>

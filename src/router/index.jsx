@@ -46,8 +46,10 @@ function AppRouter() {
 						<Route path="*" element={<Navigate to="/login" replace />} />
 					)}
 				</Routes>
+
 				<Modal />
 				<Toaster richColors />
+				
 			</ThemeProvider>
 		</Router>
 	);
