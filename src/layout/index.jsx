@@ -1,8 +1,8 @@
 "use client";
-import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { AppSidebar } from "@/components/shadcn/sidebar/app-sidebar";
 import { Outlet } from "react-router-dom";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Header } from "@/components/header/app-header";
+import { SidebarInset, SidebarProvider } from "@/components/shadcn/ui/sidebar";
+import { Header } from "@/components/shadcn/header/app-header";
 
 export default function Layout({ children }) {
 	return (
@@ -13,7 +13,6 @@ export default function Layout({ children }) {
 					<Header />
 					<div className="p-4 pt-0">
 						<Outlet />
-						
 					</div>
 				</SidebarInset>
 			</SidebarProvider>

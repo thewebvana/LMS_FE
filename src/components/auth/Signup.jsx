@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+} from "@/components/shadcn/ui/card";
+import { Input } from "@/components/shadcn/ui/input";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm  } from "react-hook-form";
@@ -18,7 +18,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/ui/form";
+} from "@/components/shadcn/ui/form";
 import { useEffect } from "react";
 import { getAllUsers, registerUser } from "../utils/services/auth";
 import { Loader2 } from "lucide-react";

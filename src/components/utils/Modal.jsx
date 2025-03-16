@@ -6,7 +6,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/shadcn/ui/dialog";
 import useModalStore from "@/store/useModalStore";
 
 function Modal() {

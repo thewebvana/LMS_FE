@@ -18,16 +18,16 @@ import {
   SquareTerminal,
 } from "lucide-react"
 
-import { NavMain } from "@/components/sidebar/nav-main"
-import { NavUser } from "@/components/sidebar/nav-user"
-import { TeamSwitcher } from "@/components/sidebar/team-switcher"
+import { NavMain } from "@/components/shadcn/sidebar/nav-main"
+import { NavUser } from "@/components/shadcn/sidebar/nav-user"
+import { TeamSwitcher } from "@/components/shadcn/sidebar/team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/shadcn/ui/sidebar"
 
 // This is sample data.
 const data = {

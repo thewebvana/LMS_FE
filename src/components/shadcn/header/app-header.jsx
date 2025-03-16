@@ -6,13 +6,13 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/shadcn/ui/breadcrumb";
+import { Separator } from "@/components/shadcn/ui/separator";
 
 
-import { ModeToggle } from "@/components/theme/theme-toggle";
+import { ModeToggle } from "@/components/shadcn/theme/theme-toggle";
 import { useLocation } from "react-router-dom";
-import { SidebarTrigger, } from "@/components/ui/sidebar";
+import { SidebarTrigger, } from "@/components/shadcn/ui/sidebar";
 
 export function Header() {
 

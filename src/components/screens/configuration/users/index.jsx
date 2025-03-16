@@ -1,5 +1,5 @@
-import { TenStackTable } from "@/components/tenstacktable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { TenStackTable } from "@/components/shadcn/tenstacktable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs"
 
 
 

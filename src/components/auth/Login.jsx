@@ -1,14 +1,14 @@
 ("use client");
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/shadcn/ui/card";
+import { Input } from "@/components/shadcn/ui/input";
+import { Label } from "@/components/shadcn/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import useAxios from "@/axios/interceptors";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/ui/form";
+} from "@/components/shadcn/ui/form";
 import useAuthStore from "@/store/useAuthStore";
 
 const apiUrl = import.meta.env.VITE_API_URL;
