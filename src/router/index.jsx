@@ -14,6 +14,8 @@ import {
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import Modal from "@/components/utils/Modal"
 import { Toaster, toast } from 'sonner'
+import useAuthStore from "@/store/useAuthStore";
+import Logout from "@/components/auth/Logout";
 
 const RedirectToLogin = () => {
 	return (
@@ -24,7 +26,7 @@ const RedirectToLogin = () => {
 };
 
 function AppRouter() {
-	const [isLogin, setIslogin] = useState(true);
+	const {isAuthenticated } = useAuthStore();
 
 	return (
 		<Router>
@@ -34,9 +36,10 @@ function AppRouter() {
 					<Route path="/" element={<Login />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
+					<Route path="/logout" element={<Logout />} />
 
 					{/* Protected Routes */}
-					{isLogin ? (
+					{isAuthenticated ? (
 						<Route element={<Layout />}>
 							<Route path="/dashboard" element={<Dashboard />} />
 							<Route path="/settings/users" element={<Users />} />

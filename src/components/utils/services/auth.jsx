@@ -13,6 +13,16 @@ export const registerUser = async (data) => {
   }
 };
 
+export const Api_login = async (data) => {
+
+  try {
+    const response = await axios.post(`${apiUrl}/auth/v1/login`, data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "An error occurred" };
+  }
+};
+
 export const getAllUsers = async (data) => {
 
   try {

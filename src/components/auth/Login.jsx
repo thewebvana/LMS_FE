@@ -9,33 +9,86 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxios from "@/axios/interceptors";
 import { useEffect } from "react";
 import useModalStore from "@/store/useModalStore";
 import AddUser from "./AddUser";
-
-import { toast } from "sonner"
-
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Api_login } from "../utils/services/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { loginSchema } from "../utils/schemas/Auth";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import useAuthStore from "@/store/useAuthStore";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Login() {
 	const { openModal, content } = useModalStore();
+	const navigate = useNavigate();
+	const { setUserData, isAuthenticated  } = useAuthStore();
+
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate("/dashboard");
+		}
+	}, [isAuthenticated, navigate]);
+	
+	const form = useForm({
+		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+	});
 
 	function handleClick() {
-		toast.success("Event has been created.")
+		toast.success("Event has been created.");
 		openModal({
-		    Component: AddUser, // Pass the component
-		    title: "User Registration",
-		    description: "Fill out the form to create a new user account.",
+			Component: AddUser, // Pass the component
+			title: "User Registration",
+			description: "Fill out the form to create a new user account.",
 		});
 	}
 
 
+	const mutation = useMutation({
+		mutationFn: Api_login,
+		onSuccess: (data) => {
+			const { user, token } = data; 
+			setUserData(user, token)
+			toast.success(data?.message || "Login successful!");
+			form.reset();
+			navigate("/dashboard");
+		},
+		onError: (error) => {
+			console.error(error.error || error?.message || "Login failed. Please try again.");
+		},
+	});
+
+	const handleLogin = async (data) => {
+		const toastId = toast.loading("Logging in...");
+		try {
+			await mutation.mutateAsync(data);
+		} catch (error) {
+			toast.error(error.error || error?.message || "Login failed.");
+		} finally {
+			toast.dismiss(toastId);
+		}
+	};
+
 	return (
 		<div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-
 			<div className="w-full max-w-sm">
 				<div className="flex flex-col gap-6">
 					<Card>
@@ -46,46 +99,77 @@ export default function Login() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<form>
-								<div className="flex flex-col gap-6">
-									<div className="grid gap-4">
-										<Label htmlFor="email">Email</Label>
-										<Input
-											id="email"
-											type="email"
-											placeholder="abc@example.com"
+							<Form {...form}>
+								<form onSubmit={form.handleSubmit(handleLogin)}>
+									<div className="flex flex-col gap-6">
+										{/* Email Field */}
+										<FormField
+											control={form.control}
+											name="email"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>Email</FormLabel>
+													<FormControl>
+														<Input
+															type="email"
+															placeholder="abc@example.com"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
 										/>
-									</div>
-									<div className="grid gap-4">
-										<div className="flex items-center">
-											<Label htmlFor="password">Password</Label>
-										</div>
-										<Input id="password" type="password" />
-									</div>
-									<a
-										href="#"
-										className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-									>
-										Forgot your password?
-									</a>
-									<Link to="/dashboard">
-										<Button className="w-full" >Login</Button>
-									</Link>
-								</div>
-								<div className="mt-4 text-center text-sm">
-									Don&apos;t have an account?{" "}
-									<Link to="/signup">
-										<Button variant="link" size="none">
-											Register
+
+										{/* Password Field */}
+										<FormField
+											control={form.control}
+											name="password"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>Password</FormLabel>
+													<FormControl>
+														<Input
+															type="password"
+															placeholder="••••••"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+
+										<a
+											href="#"
+											className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+										>
+											Forgot your password?
+										</a>
+
+										<Button
+											type="submit"
+											className="w-full"
+											disabled={mutation.isPending}
+										>
+											Login
 										</Button>
-									</Link>
-								</div>
-								<div className="mt-4 text-center text-sm">
-									<div variant="link" size="none" onClick={handleClick}>
-										Register
 									</div>
-								</div>
-							</form>
+									<div className="mt-4 text-center text-sm">
+										Don&apos;t have an account?{" "}
+										<Link to="/signup">
+											<Button variant="link" size="none">
+												Register
+											</Button>
+										</Link>
+									</div>
+									<div className="mt-4 text-center text-sm">
+										<div variant="link" size="none" onClick={handleClick}>
+											Register
+										</div>
+									</div>
+								</form>
+							</Form>
 						</CardContent>
 					</Card>
 				</div>
