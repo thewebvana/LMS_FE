@@ -16,6 +16,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  User,
 } from "lucide-react"
 
 import { NavMain } from "@/components/shadcn/sidebar/nav-main"
@@ -28,16 +29,10 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/shadcn/ui/sidebar"
+import useAuthStore from "@/store/useAuthStore"
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-
-
 
   teams: [
     {
@@ -103,6 +98,15 @@ const data = {
 export function AppSidebar({
   ...props
 }) {
+
+  const { user } = useAuthStore();
+  
+  let userdata = {
+    name: user.full_name,
+    email: user.email,
+    avatar: User,
+  }
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -112,7 +116,7 @@ export function AppSidebar({
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userdata} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
