@@ -29,6 +29,8 @@ import {
 	FormMessage,
 } from "@/components/shadcn/ui/form";
 import useAuthStore from "@/store/useAuthStore";
+import Cookies from "js-cookie";
+
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -66,6 +68,7 @@ export default function Login() {
 		mutationFn: Api_login,
 		onSuccess: (data) => {
 			const { user, token } = data; 
+			Cookies.set("token", token);
 			setUserData(user, token)
 			toast.success(data?.message || "Login successful!");
 			form.reset();

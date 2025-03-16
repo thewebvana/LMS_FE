@@ -12,16 +12,16 @@ const useAxios = () => {
   const { user, token, isAuthenticated } = useAuthStore();
   const axiosInstance = axios.create({
     baseURL: apiUrl,
-    // withCredentials: true,
+    withCredentials: true,
   });
 
   axiosInstance.interceptors.request.use(
     async (config) => {
-      // const X_CSRF_Token = Cookies.get("X_CSRF_Token");
+      const JWT_TOKEN = Cookies.get("token");
 
       config.headers["Content-Type"] = "application/json";
-      // config.headers["X-CSRF-Token"] = X_CSRF_Token;
-      // config.withCredentials = true;
+      config.headers["token"] = JWT_TOKEN;
+      config.withCredentials = true;
 
       const DefaultParams = {
         role_id: user.role_id,
