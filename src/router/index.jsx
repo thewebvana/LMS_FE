@@ -16,6 +16,8 @@ import Modal from "@/components/utils/Modal"
 import { Toaster, toast } from 'sonner'
 import useAuthStore from "@/store/useAuthStore";
 import Logout from "@/components/auth/Logout";
+import ForgotPassword from "@/components/auth/ForgotPassword";
+import ResetPassword from "@/components/auth/ResetPassword";
 
 const RedirectToLogin = () => {
 	return (
@@ -37,6 +39,8 @@ function AppRouter() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
 					<Route path="/logout" element={<Logout />} />
+					<Route path="/forgot-password" element={<ForgotPassword />} />
+					<Route path="/reset-password" element={<ResetPassword />} />
 
 					{/* Protected Routes */}
 					{isAuthenticated ? (

@@ -143,12 +143,12 @@ export default function Login() {
 											)}
 										/>
 
-										<a
-											href="#"
-											className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-										>
+
+
+										<Link to="/forgot-password"
+										className="ml-auto inline-block text-sm">
 											Forgot your password?
-										</a>
+										</Link>
 
 										<Button
 											type="submit"
@@ -166,11 +166,11 @@ export default function Login() {
 											</Button>
 										</Link>
 									</div>
-									<div className="mt-4 text-center text-sm">
+									{/* <div className="mt-4 text-center text-sm">
 										<div variant="link" size="none" onClick={handleClick}>
 											Register
 										</div>
-									</div>
+									</div> */}
 								</form>
 							</Form>
 						</CardContent>

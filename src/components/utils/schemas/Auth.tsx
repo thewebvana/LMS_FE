@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-export const principalSchema = z
-	.object({
+export const principalSchema = z.object({
 		full_name: z
 			.string()
 			.min(2, { message: "Username must be at least 2 characters." })
@@ -32,4 +31,8 @@ export const loginSchema = z.object({
 	password: z
 		.string()
 		.min(6, { message: "Password must be at least 6 characters." }),
+});
+
+export const resetPassword = z.object({
+	email: z.string().email({ message: "Invalid email address." })
 });
