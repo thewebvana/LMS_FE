@@ -55,7 +55,7 @@ export default function ResetPassword() {
     useEffect(() => {
         if (!token) {
             toast.error("Invalid or expired reset link.");
-            navigate("/");
+            // navigate("/");
         }
     }, [token, navigate]);
 
