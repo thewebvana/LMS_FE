@@ -31,6 +31,7 @@ import {
 } from "@/components/shadcn/ui/sidebar";
 
 import { Link } from "react-router-dom";
+import { ModeToggle } from "../theme/theme-toggle";
 
 export function NavUser({ user }) {
 	const { isMobile } = useSidebar();
@@ -71,6 +72,7 @@ export function NavUser({ user }) {
 									<span className="truncate font-semibold">{user.name}</span>
 									<span className="truncate text-xs">{user.email}</span>
 								</div>
+								<ModeToggle />
 							</div>
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
@@ -94,6 +96,7 @@ export function NavUser({ user }) {
 								<Bell />
 								Notifications
 							</DropdownMenuItem>
+							
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<Link to="/logout">

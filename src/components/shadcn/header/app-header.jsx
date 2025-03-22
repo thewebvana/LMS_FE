@@ -46,9 +46,9 @@ export function Header() {
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>
-                    <div>
+                    {/* <div>
                         <ModeToggle />
-                    </div>
+                    </div> */}
                 </div>
             </header>
 
