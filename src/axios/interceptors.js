@@ -20,7 +20,7 @@ const useAxios = () => {
       const JWT_TOKEN = Cookies.get("token");
 
       config.headers["Content-Type"] = "application/json";
-      config.headers["token"] = JWT_TOKEN;
+      config.headers["Authorization"] =  `Bearer ${JWT_TOKEN}`;
       config.withCredentials = true;
 
       const DefaultParams = {
