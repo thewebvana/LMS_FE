@@ -27,9 +27,10 @@ export default function Users() {
 		queryFn: getAllUsers,
 	});
 
-	console.log("error", error)
-	// console.log("isLoading", isLoading)
-	// console.log("data", data)
+	const hideColumns = ["user_id"]
+
+	console.log("data", data?.data)
+
 	return (
 		<>
 			<div className="mt-2">
@@ -55,7 +56,7 @@ export default function Users() {
 				</div>
 
 				<div className="mt-5">
-					<TenStackTable />
+					<TenStackTable data={data?.data} isLoading={isLoading} hideColumns={hideColumns}/>
 				</div>
 			</div>
 			{/* <Tabs defaultValue="admins">
