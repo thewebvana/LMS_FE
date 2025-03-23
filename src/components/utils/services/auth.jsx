@@ -23,13 +23,3 @@ export const Api_login = async (data) => {
   }
 };
 
-
-export const getAllUsers = async (data) => {
-
-  try {
-    const response = await axios.get(`${apiUrl}/v1/users`);
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { message: "An error occurred" };
-  }
-};

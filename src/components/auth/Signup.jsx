@@ -20,18 +20,13 @@ import {
 	FormMessage,
 } from "@/components/shadcn/ui/form";
 import { useEffect } from "react";
-import { getAllUsers, registerUser } from "../utils/services/auth";
+import { registerUser } from "../utils/services/auth";
 import { Loader2 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom"; // If using React Router
 export default function Signup() {
-	const queryClient = useQueryClient();
 
-	// const { data, isLoading, isError, error } = useQuery({
-	// 	queryKey: ["getAllUsers"],
-	// 	queryFn: getAllUsers,
-	// });
 	const navigate = useNavigate();
 	const form = useForm({
 		resolver: zodResolver(principalSchema),

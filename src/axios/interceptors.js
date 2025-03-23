@@ -9,7 +9,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const useAxios = () => {
 
-  const { user, token, isAuthenticated } = useAuthStore();
+  const authState = useAuthStore.getState(); 
+
   const axiosInstance = axios.create({
     baseURL: apiUrl,
     withCredentials: true,
@@ -24,8 +25,11 @@ const useAxios = () => {
       config.withCredentials = true;
 
       const DefaultParams = {
-        role_id: user.role_id,
-        user_id: user.id
+        logged_in_role: authState?.user?.role,
+        logged_in_user_id: authState?.user?.user_id,
+        logged_in_email: authState?.user?.email,
+        logged_in_full_name: authState?.user?.full_name,
+        
       };
 
 
@@ -44,8 +48,11 @@ const useAxios = () => {
         }
 
         const DefaultData = {
-          role_id: user.role_id,
-          user_id: user.id
+          logged_in_role: authState?.user?.role,
+          logged_in_user_id: authState?.user?.user_id,
+          logged_in_email: authState?.user?.email,
+          logged_in_full_name: authState?.user?.full_name,
+          
         };
 
         const contentType = config.data?.contentType;
@@ -119,7 +126,7 @@ const useAxios = () => {
     }
   );
 
-  return [axiosInstance];
+  return axiosInstance;
 };
 
 export default useAxios;

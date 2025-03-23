@@ -2,41 +2,7 @@ import useAxios from "@/axios/interceptors";
 import { useEffect } from "react";
 
 export default function Dashboard() {
-	const [Axios] = useAxios();
 
-
-	useEffect(() => {
-		// async function fetchData() {
-		// 	try {
-		// 		let response = await Axios.get("/test", {
-		// 			params: {
-		// 				p1: "xyz",
-		// 			},
-		// 		});
-		// 	} catch (error) {
-		// 		console.log(error);
-		// 	}
-		// }
-		// fetchData();
-	}, []);
-
-
-	useEffect(() => {
-		async function fetchData() {
-
-      let payload = {
-        data: "xya", 
-        test: "djjf"
-      }
-
-			try {
-				let response = await Axios.get("/v1/users", payload);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		fetchData();
-	}, []);
 
 
 	return (

@@ -13,8 +13,23 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAllUsers } from "@/components/utils/services/config";
+
 
 export default function Users() {
+
+
+	const queryClient = useQueryClient();
+
+	const { data, isLoading, isError, error } = useQuery({
+		queryKey: ["getAllUsers"],
+		queryFn: getAllUsers,
+	});
+
+	console.log("error", error)
+	// console.log("isLoading", isLoading)
+	// console.log("data", data)
 	return (
 		<>
 			<div className="mt-2">
@@ -40,9 +55,7 @@ export default function Users() {
 				</div>
 
 				<div className="mt-5">
-
-						<TenStackTable />
-		
+					<TenStackTable />
 				</div>
 			</div>
 			{/* <Tabs defaultValue="admins">
