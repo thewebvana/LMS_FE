@@ -15,7 +15,7 @@ function Modal() {
 	return (
 		<>
 			<Dialog open={isOpen} onOpenChange={closeModal}>
-				<DialogContent>
+				<DialogContent className="max-h-[90vh] overflow-y-auto">
 					{title && (
 						<DialogHeader>
 							<DialogTitle>{title}</DialogTitle>

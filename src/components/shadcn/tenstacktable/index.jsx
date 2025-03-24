@@ -82,6 +82,7 @@ export function TenStackTable(props) {
 	let rowSelect = props?.rowSelect || true;
 	let isSorting = props?.isSorting || true;
 	let columnsTypes = props?.columnsTypes || null;
+	let customColumns = props?.customColumns || [];
 
 	// State
 	const [sorting, setSorting] = useState([]);
@@ -133,7 +134,7 @@ export function TenStackTable(props) {
 		enableSorting: isSorting, // Enable sorting on this column
 	}));
 
-	//Created AT and Updated AT
+	//Created AT and Updated AT Formate data
 	const formattedData = useMemo(() => {
 		if (!data) return [];
 		return data.map((item) => {
@@ -193,36 +194,9 @@ export function TenStackTable(props) {
 						enableHiding: true,
 				  },
 			...columnHeaders,
-			{
-				id: "actions",
-				header: "Actions",
-				cell: ({ row }) => {
-					return (
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="ghost" className="h-8 w-8 p-0">
-									<MoreHorizontal className="h-4 w-4" />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								<DropdownMenuLabel>Actions</DropdownMenuLabel>
-								<DropdownMenuItem
-									onClick={() =>
-										navigator.clipboard.writeText(row.getValue("invoice"))
-									}
-								>
-									Copy Invoice ID
-								</DropdownMenuItem>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem>View details</DropdownMenuItem>
-								<DropdownMenuItem>Download PDF</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					);
-				},
-			},
+			...customColumns,
 		],
-		[selectAllRow, rowSelect, columnHeaders]
+		[selectAllRow, rowSelect, columnHeaders, customColumns]
 	);
 
 	// Table instance

@@ -3,14 +3,21 @@ import { create } from "zustand";
 
 const useModalStore = create((set) => ({
 	isOpen: false,
-	title: null,
-	description: null,
-	Content: "",
+	title: "",
+	description: "",
+	props: null,
+	Content: null,
 
-	openModal: ({ Component, title="", description=""}) =>
-		set({ isOpen: true, Content: () => <Component />, title, description }),
+	openModal: ({ Component, props = {}, title = "", description = "" }) =>
+		set({
+			isOpen: true,
+			Content: () => <Component {...props} />, 
+			title,
+			description,
+		}),
 
-	closeModal: () => set({ isOpen: false, content: null,  title : "", description: "" }),
+	closeModal: () =>
+		set({ isOpen: false, Content: null, title: "", description: "" }),
 }));
 
 export default useModalStore;
