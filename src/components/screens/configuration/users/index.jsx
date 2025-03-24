@@ -29,7 +29,7 @@ export default function Users() {
 
 	const hideColumns = ["user_id"]
 
-	console.log("data", data?.data)
+	console.log("data", data)
 
 	return (
 		<>
@@ -56,7 +56,7 @@ export default function Users() {
 				</div>
 
 				<div className="mt-5">
-					<TenStackTable data={data?.data} isLoading={isLoading} hideColumns={hideColumns}/>
+					<TenStackTable data={data?.data} isLoading={isLoading} hideColumns={hideColumns} columnsTypes={data?.columnsTypes}/>
 				</div>
 			</div>
 			{/* <Tabs defaultValue="admins">

@@ -60,6 +60,8 @@ import {
 	PopoverTrigger,
 } from "@/components/shadcn/ui/popover";
 import { SkeletonTable } from "./skeleton";
+import { object } from "zod";
+import moment from "moment/moment";
 
 // Fuzzy filter function
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -70,9 +72,7 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
 
 export function TenStackTable(props) {
 	if (props?.isLoading) {
-    return (
-      <SkeletonTable rows={5} columns={4}/>
-    );
+		return <SkeletonTable rows={5} columns={4} />;
 	}
 
 	let hideColumns = props?.hideColumns || [];
@@ -81,6 +81,7 @@ export function TenStackTable(props) {
 	let selectAllRow = props?.selectAllRow || true;
 	let rowSelect = props?.rowSelect || true;
 	let isSorting = props?.isSorting || true;
+	let columnsTypes = props?.columnsTypes || null;
 
 	// State
 	const [sorting, setSorting] = useState([]);
@@ -99,38 +100,52 @@ export function TenStackTable(props) {
 	const [globalFilter, setGlobalFilter] = useState("");
 
 	//set column visibility
-  useEffect(() => {
-    if (data?.length > 0) {
-      const cv = Object.keys(data[0]).reduce((acc, key) => {
-        acc[key] = !hideColumns.includes(key);
-        return acc;
-      }, {});
-  
-      setColumnVisibility(cv);
-    }
-  }, [hideColumns, data])
+	useEffect(() => {
+		if (data?.length > 0) {
+			const cv = Object.keys(data[0]).reduce((acc, key) => {
+				acc[key] = !hideColumns.includes(key);
+				return acc;
+			}, {});
+
+			setColumnVisibility(cv);
+		}
+	}, [hideColumns, data]);
 
 	// Column definitions
-  const columnHeaders = Object.keys(data?.[0]).map((key) => ({
-    accessorKey: key,
-    header: ({ column }) => {
-      return (
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2"
-        >
-          {key
-            .replace(/_/g, " ") // Replace underscores with spaces
-            .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitalize each word
-            .replace("Isdeleted", "Is Deleted")
-            .replace("Createdat", "Created At")
-            .replace("Updatedat", "Updated At")}
-          <ArrowUpDown className="h-4 w-4" />
-        </button>
-      );
-    },
-    enableSorting: isSorting, // Enable sorting on this column
-  }));
+	const columnHeaders = Object.keys(data?.[0]).map((key) => ({
+		accessorKey: key,
+		header: ({ column }) => {
+			return (
+				<button
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="flex items-center gap-2"
+				>
+					{key
+						.replace(/_/g, " ") // Replace underscores with spaces
+						.replace(/\b\w/g, (char) => char.toUpperCase()) // Capitalize each word
+						.replace("Isdeleted", "Is Deleted")
+						.replace("Createdat", "Created At")
+						.replace("Updatedat", "Updated At")}
+					<ArrowUpDown className="h-4 w-4" />
+				</button>
+			);
+		},
+		enableSorting: isSorting, // Enable sorting on this column
+	}));
+
+	//Created AT and Updated AT
+	const formattedData = useMemo(() => {
+		if (!data) return [];
+		return data.map((item) => {
+			let newItem = { ...item };
+			Object.keys(newItem).forEach((key) => {
+				if (columnsTypes?.[key] === "Date" && newItem[key]) {
+					newItem[key] = moment(newItem[key]).format("DD-MM-YYYY hh:mm A");
+				}
+			});
+			return newItem;
+		});
+	}, [data, columnsTypes]);
 
 	const columns = useMemo(
 		() => [
@@ -207,12 +222,12 @@ export function TenStackTable(props) {
 				},
 			},
 		],
-    [selectAllRow, rowSelect, columnHeaders] 
+		[selectAllRow, rowSelect, columnHeaders]
 	);
 
 	// Table instance
 	const table = useReactTable({
-		data: data,
+		data: formattedData,
 		columns,
 		state: {
 			sorting,
