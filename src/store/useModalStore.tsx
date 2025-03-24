@@ -5,19 +5,19 @@ const useModalStore = create((set) => ({
 	isOpen: false,
 	title: "",
 	description: "",
-	props: null,
+	props: {},
 	Content: null,
 
 	openModal: ({ Component, props = {}, title = "", description = "" }) =>
 		set({
 			isOpen: true,
-			Content: () => <Component {...props} />, 
+			Content: () => <Component {...props}/>, 
 			title,
 			description,
 		}),
 
 	closeModal: () =>
-		set({ isOpen: false, Content: null, title: "", description: "" }),
+		set({ isOpen: false, title: "", description: "", props: {} }),
 }));
 
 export default useModalStore;

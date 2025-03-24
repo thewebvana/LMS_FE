@@ -33,10 +33,12 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { updateUser } from "@/components/utils/services/config";
+import useModalStore from "@/store/useModalStore";
 
 export default function Edit(props) {
-
-	console.log(props)
+	// console.log(props);
+	const {closeModal} = useModalStore();
 	const navigate = useNavigate();
 	const form = useForm({
 		resolver: zodResolver(editPrincipalValidation),
@@ -52,7 +54,7 @@ export default function Edit(props) {
 	});
 
 	const mutation = useMutation({
-		// mutationFn: registerUser,
+		mutationFn: updateUser,
 		onSuccess: (data) => {
 			// queryClient.invalidateQueries(["getAllUsers"]);
 		},
@@ -62,19 +64,18 @@ export default function Edit(props) {
 	});
 
 	const onSubmit = async (data) => {
-		delete data.confirmPassword;
 		let payload = {
 			...data,
-			role: "PRINCIPAL",
+			user_id: props.user_id, // Ensure user_id is included in payload
 		};
 
 		try {
-			toast.loading("Registering..."); // Show loading toast
+			toast.loading("updating..."); // Show loading toast
 			const response = await mutation.mutateAsync(payload);
 			toast.dismiss();
-			toast.success(response?.message || "Registered successfully!");
-			form.reset();
-			navigate("/login"); // Adjust the route as needed
+			// closeModal();
+			toast.success(response?.message || "Updated successfully!");
+			// form.reset();
 		} catch (error) {
 			toast.dismiss(); // Remove the loading toast
 			toast.error(error.message || "Something went wrong!");
@@ -151,14 +152,15 @@ export default function Edit(props) {
 										<FormItem>
 											<FormLabel>Role</FormLabel>
 											<FormControl>
-												<Select {...field}>
+												<Select {...field} onValueChange={field.onChange}>
 													<SelectTrigger className="w-full">
 														<SelectValue placeholder="Theme" />
 													</SelectTrigger>
 													<SelectContent>
-														<SelectItem value="light">Light</SelectItem>
-														<SelectItem value="dark">Dark</SelectItem>
-														<SelectItem value="system">System</SelectItem>
+														<SelectItem value="PRINCIPAL">PRINCIPAL</SelectItem>
+														<SelectItem value="ADMIN">ADMIN</SelectItem>
+														<SelectItem value="TEACHER">TEACHER</SelectItem>
+														<SelectItem value="STUDENT">STUDENT</SelectItem>
 													</SelectContent>
 												</Select>
 											</FormControl>
@@ -170,19 +172,19 @@ export default function Edit(props) {
 								{/* Gender Field */}
 								<FormField
 									control={form.control}
-									name="role"
+									name="gender"
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>Gender</FormLabel>
 											<FormControl>
-												<Select {...field} >
+												<Select {...field} onValueChange={field.onChange}>
 													<SelectTrigger className="w-full">
-														<SelectValue placeholder="Male" v />
+														<SelectValue placeholder="Male" />
 													</SelectTrigger>
 													<SelectContent>
-														<SelectItem value="light">MALE</SelectItem>
-														<SelectItem value="dark">FEMALE</SelectItem>
-														<SelectItem value="system">OTHER</SelectItem>
+														<SelectItem value="MALE">MALE</SelectItem>
+														<SelectItem value="FEMALE">FEMALE</SelectItem>
+														<SelectItem value="OTHER">OTHER</SelectItem>
 													</SelectContent>
 												</Select>
 											</FormControl>
@@ -209,7 +211,7 @@ export default function Edit(props) {
 								<div className="space-y-4">
 									<FormField
 										control={form.control}
-										name="marketing_emails"
+										name="active"
 										render={({ field }) => (
 											<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
 												<div className="space-y-0.5">
@@ -240,14 +242,6 @@ export default function Edit(props) {
 						</form>
 					</Form>
 
-					<div className="mt-4 text-center text-sm">
-						Already have an account?{" "}
-						<Link to="/">
-							<Button variant="link" size="none">
-								Login
-							</Button>
-						</Link>
-					</div>
 				</div>
 			</div>
 		</div>
