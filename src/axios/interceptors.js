@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useStore } from "zustand";
 import { toast } from "sonner";
+import useModalStore from "@/store/useModalStore";
 // import { userState } from "@/zustandStore/zUser";
 // import { modalState } from "@/zustandStore/zModal";
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -10,6 +11,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const useAxios = () => {
 
   const authState = useAuthStore.getState(); 
+  const modalState = useModalStore.getState(); 
 
   const axiosInstance = axios.create({
     baseURL: apiUrl,
@@ -33,12 +35,12 @@ const useAxios = () => {
       };
 
 
-      if (config.method === "get") {
+      if (config.method === "get" || config.method === "delete") {
         config.params = config.params ? { ...DefaultParams, ...config.params } : DefaultParams;
         config.data = {};
       }
 
-      if (config.method === "post") {
+      if (config.method === "post" || config.method === "put") {
 
         let toastId = "";
 
@@ -78,12 +80,14 @@ const useAxios = () => {
     async (response) => {
       const toastId = response.config.headers.toastId;
 
-      if (response.config.method === "post") {
+      if (response.config.method === "post" || response.config.method === "put") {
         const message = response?.data?.message;
         if (!response.config?.params?.hide_toast) {
-          toast.dismiss(toastId);
-          toast.success(message)
-          // zCloseModal();
+          toast.dismiss();
+          modalState.closeModal()
+          setTimeout(() => {
+            toast.success(message)
+          }, 100);
         }
       }
 
@@ -108,20 +112,18 @@ const useAxios = () => {
 
     async (error) => {
 
-      if (error?.config?.method === "post") {
+      if (error?.config?.method === "post" || error?.config?.method === "put") {
 
         const errData = error?.response?.data?.message;
         const toastId = error.config.headers.toastId;
 
         if (!error.config?.params?.hide_toast) {
-
           toast.dismiss();
-          setTimeout(() => {
-            toast.error(errData)
-          }, 1000);
-          console.log("errData", toastId)
         }
       }
+      setTimeout(() => {
+        toast.error(error?.response?.data?.message || "something went wrong")
+      }, 1000);
       return Promise.reject(error);
     }
   );

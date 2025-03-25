@@ -6,7 +6,7 @@ const useModalStore = create((set) => ({
 	title: "",
 	description: "",
 	props: {},
-	Content: null,
+	Content: "",
 
 	openModal: ({ Component, props = {}, title = "", description = "" }) =>
 		set({

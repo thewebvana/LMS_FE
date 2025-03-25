@@ -23,8 +23,7 @@ import useModalStore from "@/store/useModalStore";
 import EditUser from "./edit";
 
 export default function Users() {
-	const queryClient = useQueryClient();
-	const { openModal, content } = useModalStore();
+	const { openModal } = useModalStore();
 
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["getAllUsers"],
@@ -75,7 +74,6 @@ export default function Users() {
 		},
 	];
 
-	console.log("data", data);
 
 	return (
 		<>
@@ -108,6 +106,7 @@ export default function Users() {
 						hideColumns={hideColumns}
 						columnsTypes={data?.columnsTypes}
 						customColumns={customColumns}
+						isError={isError}
 					/>
 				</div>
 			</div>

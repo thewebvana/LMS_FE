@@ -1,13 +1,5 @@
 import { Button } from "@/components/shadcn/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/shadcn/ui/card";
 import { Input } from "@/components/shadcn/ui/input";
-import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -19,11 +11,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/shadcn/ui/form";
-import { useEffect } from "react";
-import { Loader2 } from "lucide-react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom"; // If using React Router
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editPrincipalValidation } from "@/components/utils/schemas/config";
 import {
 	Select,
@@ -34,12 +22,10 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { updateUser } from "@/components/utils/services/config";
-import useModalStore from "@/store/useModalStore";
 
 export default function Edit(props) {
-	// console.log(props);
-	const {closeModal} = useModalStore();
-	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+
 	const form = useForm({
 		resolver: zodResolver(editPrincipalValidation),
 		defaultValues: {
@@ -56,7 +42,7 @@ export default function Edit(props) {
 	const mutation = useMutation({
 		mutationFn: updateUser,
 		onSuccess: (data) => {
-			// queryClient.invalidateQueries(["getAllUsers"]);
+			queryClient.invalidateQueries(["getAllUsers"]);
 		},
 		onError: (error) => {
 			console.error("mutation error", error.message);
@@ -66,19 +52,14 @@ export default function Edit(props) {
 	const onSubmit = async (data) => {
 		let payload = {
 			...data,
-			user_id: props.user_id, // Ensure user_id is included in payload
+			user_id: props.user_id,
 		};
 
 		try {
-			toast.loading("updating..."); // Show loading toast
 			const response = await mutation.mutateAsync(payload);
-			toast.dismiss();
-			// closeModal();
-			toast.success(response?.message || "Updated successfully!");
 			// form.reset();
 		} catch (error) {
-			toast.dismiss(); // Remove the loading toast
-			toast.error(error.message || "Something went wrong!");
+			console.error("error : ", error)
 		}
 	};
 

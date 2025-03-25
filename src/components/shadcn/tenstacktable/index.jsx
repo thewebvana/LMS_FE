@@ -62,6 +62,7 @@ import {
 import { SkeletonTable } from "./skeleton";
 import { object } from "zod";
 import moment from "moment/moment";
+import { toast } from "sonner";
 
 // Fuzzy filter function
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -71,18 +72,41 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
 };
 
 export function TenStackTable(props) {
-	if (props?.isLoading) {
-		return <SkeletonTable rows={5} columns={4} />;
-	}
 
 	let hideColumns = props?.hideColumns || [];
 	let loading = props?.isLoading || false;
-	let data = props?.data || null;
+	let data = props?.data || [];
 	let selectAllRow = props?.selectAllRow || true;
 	let rowSelect = props?.rowSelect || true;
 	let isSorting = props?.isSorting || true;
 	let columnsTypes = props?.columnsTypes || null;
 	let customColumns = props?.customColumns || [];
+	let isError = props?.isError || false;
+
+	if (isError) {
+		return (
+			<div className="rounded-md border">
+				<Table>
+					<TableHeader>
+						
+					</TableHeader>
+					<TableBody>
+						<TableRow>
+							<TableCell className="h-24 text-center">
+								Something went wrong! please try again.
+							</TableCell>
+						</TableRow>
+					</TableBody>
+				</Table>
+			</div>
+		);
+	}
+
+	if (props?.isLoading) {
+		return <SkeletonTable rows={5} columns={4} />;
+	}
+
+
 
 	// State
 	const [sorting, setSorting] = useState([]);
