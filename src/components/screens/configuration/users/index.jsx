@@ -30,6 +30,8 @@ export default function Users() {
 		queryFn: getAllUsers,
 	});
 
+	console.log(data)
+
 	const hideColumns = ["user_id"];
 
 	const customColumns = [
@@ -81,9 +83,6 @@ export default function Users() {
 				<div className="flex justify-end">
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button>
-								<UserRoundPlus /> Add
-							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
 							<DropdownMenuItem onClick={() => setTheme("light")}>
@@ -98,19 +97,8 @@ export default function Users() {
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
-
-				<div className="mt-5">
-					<TenStackTable
-						data={data?.data}
-						isLoading={isLoading}
-						hideColumns={hideColumns}
-						columnsTypes={data?.columnsTypes}
-						customColumns={customColumns}
-						isError={isError}
-					/>
-				</div>
 			</div>
-			{/* <Tabs defaultValue="admins">
+			<Tabs defaultValue="admins">
 				<TabsList>
 					<TabsTrigger value="admins">Admins</TabsTrigger>
 					<TabsTrigger value="teachers">Teachers</TabsTrigger>
@@ -123,33 +111,54 @@ export default function Users() {
 							<UserRoundPlus /> Add
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						<DropdownMenuItem onClick={() => setTheme("light")}>
-							Light
-						</DropdownMenuItem>
-						<DropdownMenuItem onClick={() => setTheme("dark")}>
-							Dark
-						</DropdownMenuItem>
-						<DropdownMenuItem onClick={() => setTheme("system")}>
-							System
-						</DropdownMenuItem>
-					</DropdownMenuContent>
 				</DropdownMenu>
 				<div className="mb-6"></div>
 
 				<TabsContent value="admins">
-					<TenStackTable />
+					
+					<TenStackTable
+						data={data?.data}
+						isLoading={isLoading}
+						hideColumns={hideColumns}
+						columnsTypes={data?.columnsTypes}
+						customColumns={customColumns}
+						isError={isError}
+					/>
 				</TabsContent>
 				<TabsContent value="teachers">
-					<TenStackTable />
+					
+					<TenStackTable
+						data={data?.data}
+						isLoading={isLoading}
+						hideColumns={hideColumns}
+						columnsTypes={data?.columnsTypes}
+						customColumns={customColumns}
+						isError={isError}
+					/>
 				</TabsContent>
 				<TabsContent value="students">
-					<TenStackTable />
+					
+					<TenStackTable
+						data={data?.data}
+						isLoading={isLoading}
+						hideColumns={hideColumns}
+						columnsTypes={data?.columnsTypes}
+						customColumns={customColumns}
+						isError={isError}
+					/>
 				</TabsContent>
 				<TabsContent value="parents">
-					<TenStackTable />
+					
+					<TenStackTable
+						data={data?.data}
+						isLoading={isLoading}
+						hideColumns={hideColumns}
+						columnsTypes={data?.columnsTypes}
+						customColumns={customColumns}
+						isError={isError}
+					/>
 				</TabsContent>
-			</Tabs> */}
+			</Tabs>
 		</>
 	);
 }

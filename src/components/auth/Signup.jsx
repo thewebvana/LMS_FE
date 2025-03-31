@@ -53,7 +53,7 @@ export default function Signup() {
 		delete data.confirmPassword;
 		let payload = {
 			...data,
-			role: "PRINCIPAL",
+			role: "Principal",
 		};
 	
 		try {
